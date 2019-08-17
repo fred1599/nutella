@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-from os.path import dirname
 from configparser import RawConfigParser
+
+config = RawConfigParser()
+config.read('.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -74,14 +76,19 @@ TEMPLATES = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config.get('email', 'HOST')
+EMAIL_USE_TLS = True
+EMAIL_PORT = config.get('email', 'PORT')
+EMAIL_HOST_USER = config.get('email', 'ACCOUNT')
+EMAIL_HOST_PASSWORD = config.get('email', 'PASSWORD')
+
+
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-config = RawConfigParser()
-config.read('.env')
 
 DATABASES = {
     'default': {

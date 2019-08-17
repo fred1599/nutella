@@ -2,6 +2,7 @@ from django.views.generic.edit import FormView
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.conf import settings
 
 from .forms import ContactForm, RegisterForm
 
@@ -58,8 +59,8 @@ class RegisterView(FormView):
             send_mail(
                 'Inscription sur le site',
                 'Bienvenue sur le site',
-                mail,
-                recipient_list=[],
+                settings.EMAIL_HOST_USER,
+                recipient_list=[mail,],
                 fail_silently=False,
             )
             User.objects.create(username=username, password=password, email=mail)
