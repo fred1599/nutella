@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Site Purbeurre">
+    <meta name="author" content="fred1599">
+
+    <title>PurBeurre</title>
+
+    <!-- Font Awesome Icons -->
+    <link href="{% static 'index/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{% static 'index/css/magnific-popup.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="{% static 'index/css/creative.min.css' %}" rel="stylesheet">
+
+    <!-- My Input of page -->
+    <link href="{% static 'index/css/myinput.css' %}" rel="stylesheet">
+
+    <!-- favicon -->
+    <link rel="icon" href="{% static 'index/images/favicon.ico' %}"/>
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Entreprise PurBeurre</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">Nos idées</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#services">Mes aliments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="/account/login/">Se loguer</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Masthead -->
+<header class="masthead" id="head">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-end">
+                <h2 class="text-uppercase text-white font-weight-bold">Du gras oui mais de qualité !</h2>
+                <hr class="divider my-4">
+            </div>
+            <div class="col-lg-8 align-self-baseline">
+                <p class="text-white-75 font-weight-light mb-5">Trouver un produit de substitution pour ce que vous consommez tous les jours</p>
+                <input type="search" placeholder="Entrez un mot-clef" name="the_search">
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section class="page-section bg-primary" id="about">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">Nos idées</h2>
+                <hr class="divider light my-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src="{% static 'index/images/colette.png' %}" style="width:85%;height:25%;position: absolute;top: 50%;left:15%;transform: translateY(-50%);">
+                        </div>
+                        <div class="col-sm">
+                            <p align="justify">Pur Beurre est l'initiative de deux amoureux de la gastronomie française, Colette Tatou et Rémy, que vous avez déjà certainement rencontrés dans notre excellent restaurant Ratatouille.
+                                Colette Tatou : "Nous aimons tous manger, surtout en France ! Personnellement, une baguette fraîche, du bon fromage de chèvre et un bon vin rouge me suffisent amplement. Comme tout le monde, je fais mes courses au supermarché. Mais petit à petit je me suis rendue compte, surtout lorsque nous avons ouvert le restaurant, que je pouvais remplacer les produits aseptisés que j'avais l'habitude d'acheter par de bons produits du terroir Et souvent pour le même prix !"
+                                Remy : "Pour ma part je me rendais déjà dans bien des magasins car j'aime beaucoup me balader, surtout dans les caves et les cuisines. Je connaissais par coeur le contenu des boutiques bio (dont je raffole) ainsi que les ingrédients de tous les aliments vendus. Lorsque Colette m'a demandé si elle pouvait remplacer son Nutella matinal par un aliment plus sain, je savais tout de suite où le trouver. L'idée de Pur Beurre était née !"</p>
+                        </div>
+                        <div class="col-sm">
+                            <img src="{% static 'index/images/ratatouille.png' %}" style="width:60%;height:5%;position: absolute;top: 50%;left:5%;transform: translateY(-50%);">
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-light btn-xl js-scroll-trigger" href="#head">C'est parti</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-light py-5">
+    <div class="container">
+        <div class="small text-center text-muted">Frédéric JUPPONT</div>
+    </div>
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'index/js/jquery.min.js' %}"></script>
+<script src="{% static 'index/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'index/js/jquery.easing.min.js' %}"></script>
+<script src="{% static 'index/js/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'index/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>
