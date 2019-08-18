@@ -2,4 +2,5 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'index/accueil.html')
+    user = request.user
+    return render(request, 'index/accueil.html', {'user': user})

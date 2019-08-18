@@ -1,8 +1,9 @@
 from django.views.generic.edit import FormView
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 
 from .forms import ContactForm, RegisterForm
 
@@ -27,19 +28,25 @@ class LoginView(FormView):
     template_name = "account/login.html"
     form_class = ContactForm
     success_url = 'success'
+    user = None
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
 
         try:
-            user = User.objects.get(username=username, password=password)
-            self.request.user = user
+            self.user = User.objects.get(username=username, password=password)
+            login(self.request, self.user)
         except User.DoesNotExist:
             logger.warning("L'utilisateur {} n'a pas réussi à se connecter à ".format(username))
             self.success_url = 'error'
 
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.user
+        return context
 
 
 class RegisterView(FormView):
@@ -52,11 +59,8 @@ class RegisterView(FormView):
         password = form.cleaned_data['password']
         mail = form.cleaned_data['email']
 
-        try:
-            user = User.objects.get(username=username)
-            user = User.objects.get(email=mail)
-            self.success_url = 'error'
-        except User.DoesNotExist:
+        user = authenticate(self.request, username=username, password=password)
+        if not user:
             send_mail(
                 'Inscription sur le site',
                 'Bienvenue sur le site',
@@ -65,6 +69,9 @@ class RegisterView(FormView):
                 fail_silently=False,
             )
             User.objects.create(username=username, password=password, email=mail)
+
+        else:
+            self.success_url = 'error'
 
         return super().form_valid(form)
 

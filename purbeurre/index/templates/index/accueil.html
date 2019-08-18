@@ -56,6 +56,11 @@
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="/account/login/">Se loguer</a>
                 </li>
+                {% if user %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="/account/login/">{{ user }}</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
