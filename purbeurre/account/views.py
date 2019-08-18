@@ -34,6 +34,7 @@ class LoginView(FormView):
 
         try:
             user = User.objects.get(username=username, password=password)
+            self.request.user = user
         except User.DoesNotExist:
             logger.warning("L'utilisateur {} n'a pas réussi à se connecter à ".format(username))
             self.success_url = 'error'
