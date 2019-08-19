@@ -1,9 +1,9 @@
 from django.views.generic.edit import FormView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from .forms import ContactForm, RegisterForm
 
@@ -63,7 +63,7 @@ class RegisterView(FormView):
         if not user:
             send_mail(
                 'Inscription sur le site',
-                'Bienvenue sur le site',
+                'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
                 settings.EMAIL_HOST_USER,
                 recipient_list=[mail,],
                 fail_silently=False,
@@ -97,3 +97,7 @@ def get_error_register(request):
     message = messages['register']['error']
     title = "Vous n'êtes pas enregistré"
     return render(request, 'account/error.html', {'message': message, 'title': title})
+
+def disconnect(request):
+    logout(request)
+    return redirect('index')
