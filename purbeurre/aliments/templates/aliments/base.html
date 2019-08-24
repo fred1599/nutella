@@ -1,0 +1,56 @@
+{% extends 'index/base.html' %}
+{% load static %}
+
+{% block header %}
+<header class="masthead" id="head">
+    <style>td,th{background-color:brown;color:white}; a:visited{color:white}; a:link{color:white}</style>
+    <div class="container h-100">
+        <table class="table" align="center">
+            <thead class="thead-dark" align="center">
+            <tr align="center">
+                <th scope="col">Caractéristiques</th>
+                <th scope="col">Produit</th>
+                <th scope="col">Substitut</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr align="center">
+                <th scope="row" align="center">Nom</th>
+                <td align="center">{{ p.produit }}</td>
+                <td align="center">{{ s.produit }}</td>
+            </tr>
+            <tr align="center">
+                <th scope="row" align="center">Url</th>
+                <td align="center"><a target="_blank" rel="noopener noreferrer" href="{{ p.url }}">Plus d'informations</a></td>
+                <td align="center"><a target="_blank" rel="noopener noreferrer" href="{{ s.url }}">Plus d'informations</a></td>
+            </tr>
+            <tr align="center">
+                <th scope="row" align="center">Score nutritionnel</th>
+                <td align="center">{{ p.nutrition_grades_tags.0 }}</td>
+                <td align="center">{{ s.nutrition_grades_tags.0 }}</td>
+            </tr>
+            <tr align="center" valign="middle">
+                <th scope="row" align="center" valign="middle">Image</th>
+                <td align="center" valign="middle"><img src="{{ p.image_small_url }}" class="img-fluid" alt="Responsive image"></td>
+                <td align="center" valign="middle"><img src="{{ s.image_small_url }}" class="img-fluid" alt="Responsive image"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</header>
+{% endblock header %}
+
+{% block section %}
+<section class="page-section bg-primary" id="resultat">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ p.product_name_fr }}
+            </div>
+            <div class="col">
+                {{ p.url }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock section %}
