@@ -84,19 +84,23 @@ def get_substitute(p1):
         logger.warning('Pas de catégorie, pas de substitut pour {}'.format(p1['product_name_fr']))
         return p1  # Pas de substitut possible
 
+    products = []
     api_url = "https://fr.openfoodfacts.org/cgi/search.pl?"
-    params = {
-        'tagtype_0': 'categories',
-        'tag_contains_0': 'contains',
-        'tag_0': choice(category),
-        'action': 'process',
-        'sort_by_unique': 'unique_scans_n',
-        'page_size': 20,
-        'json': 1
-    }
 
-    results = requests.get(api_url, params).json()
-    products = results['products']
+    for cat in category:
+        params = {
+            'tagtype_0': 'categories',
+            'tag_contains_0': 'contains',
+            'tag_0': cat,
+            'action': 'process',
+            'sort_by_unique': 'unique_scans_n',
+            'page_size': 20,
+            'json': 1
+        }
+
+        results = requests.get(api_url, params).json()
+        products += results['products']
+
     product = get_common_max_categories(p1, products)  # produit avec le maximum de catégories en commun avec p1
     if not product:
         logger.warning('Pas de produit avec au moins une catégorie en commun')

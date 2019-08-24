@@ -16,8 +16,8 @@
             <tbody>
             <tr align="center">
                 <th scope="row" align="center">Nom</th>
-                <td align="center">{{ p.produit }}</td>
-                <td align="center">{{ s.produit }}</td>
+                <td align="center">{{ p.product_name_fr }}</td>
+                <td align="center">{{ s.product_name_fr }}</td>
             </tr>
             <tr align="center">
                 <th scope="row" align="center">Url</th>
@@ -39,18 +39,3 @@
     </div>
 </header>
 {% endblock header %}
-
-{% block section %}
-<section class="page-section bg-primary" id="resultat">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                {{ p.product_name_fr }}
-            </div>
-            <div class="col">
-                {{ p.url }}
-            </div>
-        </div>
-    </div>
-</section>
-{% endblock section %}
