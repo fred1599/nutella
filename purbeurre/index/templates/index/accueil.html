@@ -9,14 +9,15 @@
                 <h2 class="text-uppercase text-white font-weight-bold">Du gras oui mais de qualité !</h2>
                 <hr class="divider my-4">
             </div>
-            <div class="col-lg-8 align-self-baseline">
+            <form class="col-lg-8 align-self-baseline" action="/aliments/" method="post">{% csrf_token %}
                 <p class="text-white-75 font-weight-light mb-5">Trouver un produit de substitution pour ce que vous consommez tous les jours</p>
-                <input type="search" placeholder="Entrez un mot-clef" name="the_search">
+                <input type="search" placeholder="Entrez un mot-clef" name="product">
+            </form>
             </div>
         </div>
     </div>
 </header>
-{% endblock %}
+{% endblock header %}
 
 {% block section %}
 <section class="page-section bg-primary" id="about">
@@ -45,4 +46,4 @@
         </div>
     </div>
 </section>
-{% endblock %}
+{% endblock section %}
