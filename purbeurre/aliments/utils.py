@@ -20,16 +20,21 @@ def check_common_categories(p1, p2):
     :return: Retourne les catégories en commun (type set)
     """
 
-    cat_1 = p1.get('categories', None).strip()  # on récupère les catégories du produit
-    cat_2 = p2.get('categories', None).strip()  # elles sont de type str
+    try:
+        if p1['product_name_fr'] != p2['product_name_fr']:
+            if p1['nutrition_grades_tags'][0] != p2['nutrition_grades_tags'][0]:
 
-    if cat_1 and cat_2:
-        cat_1_list = map(str.strip, cat_1.split(','))  # chaîne séparée par des virgules c'est très moche pour une API
-        cat_2_list = map(str.strip, cat_2.split(','))
+                cat_1 = p1.get('categories', None).strip()  # on récupère les catégories du produit
+                cat_2 = p2.get('categories', None).strip()  # elles sont de type str
 
-        return set(cat_1_list) & set(cat_2_list)  # il est possible qu'aucune catégorie soit en commun: set vide
+                if cat_1 and cat_2:
+                    cat_1_list = map(str.strip, cat_1.split(','))  # chaîne séparée par des virgules c'est très moche pour une API
+                    cat_2_list = map(str.strip, cat_2.split(','))
 
-    return set()  # pas de catégories en commun on passera à la comparaison du produit suivant
+                    return set(cat_1_list) & set(cat_2_list)  # il est possible qu'aucune catégorie soit en commun: set vide
+        return set()  # pas de catégories en commun on passera à la comparaison du produit suivant
+    except KeyError:
+        return set()
 
 
 def get_common_max_categories(p1, products):
@@ -43,11 +48,10 @@ def get_common_max_categories(p1, products):
     shuffle(products)  # on mélange les produits pour ne pas tomber sur toujours le même
     length_common = 0
     for p in products:
-        if p['product_name_fr'].lower() != p1['product_name_fr'].lower():
-            common_categories = check_common_categories(p1, p)
-            if common_categories and len(common_categories) > length_common:
-                length_common = len(common_categories)
-                product = p
+        common_categories = check_common_categories(p1, p)
+        if common_categories and (len(common_categories) > length_common):
+            length_common = len(common_categories)
+            product = p
 
     return product
 
@@ -59,18 +63,22 @@ def get_product_by_name(name):
     :return type: dict
     """
 
-    api_url = "https://fr.openfoodfacts.org/cgi/search.pl?"
-    params = {
-        'search_terms': name,
-        'search_simple': '1',
-        'action': 'process',
-        'sort_by_unique': 'unique_scans_n',
-        'page_size': 20,  # on recherche sur une seule page pour limiter le temps d'attente
-        'json': 1
-    }
+    if name:
+        name = name.strip().lower()
+        api_url = "https://fr.openfoodfacts.org/cgi/search.pl?"
+        params = {
+            'search_terms': name,
+            'search_simple': '1',
+            'action': 'process',
+            'sort_by_unique': 'unique_scans_n',
+            'page_size': 20,  # on recherche sur une seule page pour limiter le temps d'attente
+            'json': 1
+        }
 
-    results = requests.get(api_url, params).json()
-    return choice(results['products'])  # On choisit un produit au hasard dans la recherche
+        results = requests.get(api_url, params).json()
+        if results['products']:
+            return choice(results['products'])  # on retourne au hasard un produit de la base
+    return {}
 
 
 def get_substitute(p1):
@@ -79,10 +87,20 @@ def get_substitute(p1):
     :param p1: produit dont on cherche le substitut
     :return: retourne le produit représentant le substitut
     """
-    category = p1.get('categories', None).strip().split(',')
+
+    if not p1:
+        return None
+
+    category = p1.get('categories', None)
     if not category:
-        logger.warning('Pas de catégorie, pas de substitut pour {}'.format(p1['product_name_fr']))
-        return p1  # Pas de substitut possible
+        name = p1.get('product_name_fr', None)
+        if name:
+            logger.warning('Pas de catégorie, pas de substitut pour {}'.format(name))
+        else:
+            logger.warning('produit non reconnue et sans catégorie')
+        return p1  # Pas de substitut possible alors on retourne le produit d'origine
+
+    category = category.strip().split(',')  # liste des catégories du produit
 
     products = []
     api_url = "https://fr.openfoodfacts.org/cgi/search.pl?"
@@ -99,18 +117,28 @@ def get_substitute(p1):
         }
 
         results = requests.get(api_url, params).json()
-        products += results['products']
+        products += results['products']  # on ajoute l'ensemble produits pour toutes les catégories du produit cherché
 
-    product = get_common_max_categories(p1, products)  # produit avec le maximum de catégories en commun avec p1
-    if not product:
-        logger.warning('Pas de produit avec au moins une catégorie en commun')
-        return p1
+    good = False
+    while not good:
+        if not products:
+            good = True
+            logger.info('Pas de meilleur substitut pour le score')
+            continue
 
-    score_grade_substitut = product['nutrition_grades_tags'][0]  # on vérifie le score du substitut
-    if len(score_grade_substitut) == 1:  # si le score est valide, API pourrie, pourquoi pas une liste vide ?
-        score_grade_p1 = p1['nutrition_grades_tags'][0]
-        if len(score_grade_p1) == 1:
-            if ord(score_grade_p1) > ord(score_grade_substitut):
-                return product
-    logger.warning('Pas de meilleur substitut pour le score, ou impossible de comparer les scores')
+        product = get_common_max_categories(p1, products)  # produit avec le maximum de catégories en commun avec p1
+
+        score_grade_substitut = product['nutrition_grades_tags'][0]  # on vérifie le score du substitut
+        if len(score_grade_substitut) == 1:  # si le score est valide, API pourrie, pourquoi pas une liste vide ?
+            score_grade_p1 = p1['nutrition_grades_tags'][0]
+            if len(score_grade_p1) == 1:
+                logger.info('Les scores sont comparables')
+                if ord(score_grade_p1) > ord(score_grade_substitut):
+                    return product
+
+        if product in products:
+            products.remove(product)
+
+        good = True
+
     return p1  # soit le score n'est pas comparable, soit le score est supérieur à celui du produit à substituer

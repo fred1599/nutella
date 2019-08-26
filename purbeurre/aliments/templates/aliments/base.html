@@ -5,6 +5,7 @@
 <header class="masthead" id="head">
     <style>td,th{background-color:brown;color:white}; a:visited{color:white}; a:link{color:white}</style>
     <div class="container h-100">
+        <div class="row">
         <table class="table" align="center">
             <thead class="thead-dark" align="center">
             <tr align="center">
@@ -17,25 +18,44 @@
             <tr align="center">
                 <th scope="row" align="center">Nom</th>
                 <td align="center">{{ p.product_name_fr }}</td>
-                <td align="center">{{ s.product_name_fr }}</td>
+                {% if p.product_name_fr != s.product_name_fr %}
+                    <td align="center">{{ s.product_name_fr }}</td>
+                {% else %}
+                    <td align="center" rowspan="4" style="vertical-align : middle">pas de substitut trouvé<br>
+                        <img src="https://cdn.pixabay.com/photo/2016/07/22/01/22/sad-1533965__340.jpg">
+                    </td>
+
+                {% endif %}
             </tr>
             <tr align="center">
                 <th scope="row" align="center">Url</th>
                 <td align="center"><a target="_blank" rel="noopener noreferrer" href="{{ p.url }}">Plus d'informations</a></td>
+                {% if p.product_name_fr != s.product_name_fr %}
                 <td align="center"><a target="_blank" rel="noopener noreferrer" href="{{ s.url }}">Plus d'informations</a></td>
+                {% endif %}
             </tr>
             <tr align="center">
                 <th scope="row" align="center">Score nutritionnel</th>
                 <td align="center">{{ p.nutrition_grades_tags.0 }}</td>
+                {% if p.product_name_fr != s.product_name_fr %}
                 <td align="center">{{ s.nutrition_grades_tags.0 }}</td>
+                {% endif %}
             </tr>
             <tr align="center" valign="middle">
                 <th scope="row" align="center" valign="middle">Image</th>
                 <td align="center" valign="middle"><img src="{{ p.image_small_url }}" class="img-fluid" alt="Responsive image"></td>
+                {% if p.product_name_fr != s.product_name_fr %}
                 <td align="center" valign="middle"><img src="{{ s.image_small_url }}" class="img-fluid" alt="Responsive image"></td>
+                {% endif %}
             </tr>
             </tbody>
         </table>
+        </div>
+        <div class="row" style="float:right">
+            <form action="/index">
+                <input type="submit" value="Retour page index" style="background:brown;color:white">
+            </form>
+        </div>
     </div>
 </header>
 {% endblock header %}

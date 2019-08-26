@@ -38,32 +38,37 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Entreprise PurBeurre</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top" style="font-size:80%">Entreprise PurBeurre</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto my-2 my-lg-0">
-                <li class="nav-item">
+            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="#about">Nos idées</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="#services">Mes aliments</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/login/">Se loguer</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/disconnect/">Se déconnecter</a>
                 </li>
                 {% if not user.is_anonymous %}
-                <li class="nav-item">
+                <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/login/">{{ user }}</a>
                 </li>
                 {% endif %}
+                <li class="nav-item" style="display:inline-block">
+                    <form class="col-lg-8 align-self-baseline" action="/aliments/" method="post">{% csrf_token %}
+                        <input type="search" placeholder="Entrez un mot-clef" name="product" style="width:100%">
+                    </form>
+                </li>
             </ul>
         </div>
     </div>

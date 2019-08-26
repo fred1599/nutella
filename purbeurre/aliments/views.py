@@ -11,8 +11,11 @@ def product_view(request):
         return redirect('index')
 
     query = request.POST['product']
+    if not query:
+        return redirect('index')
+
     product = get_product_by_name(query)
     substitute = get_substitute(product)
-    if not substitute:
-        substitute = product
-    return render(request, 'aliments/base.html', {'p': product, 's': substitute})
+    if substitute:
+        return render(request, 'aliments/base.html', {'p': product, 's': substitute})
+    return redirect('index')
