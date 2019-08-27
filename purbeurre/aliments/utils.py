@@ -139,6 +139,7 @@ def get_substitute(p1):
         if product in products:
             products.remove(product)
 
-        good = True
+        else:
+            good = True
 
     return p1  # soit le score n'est pas comparable, soit le score est supérieur à celui du produit à substituer
