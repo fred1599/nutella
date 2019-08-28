@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Aliment
+
+
+@admin.register(Aliment)
+class AlimentAdmin(admin.ModelAdmin):
+    pass

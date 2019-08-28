@@ -27,7 +27,10 @@ SECRET_KEY = 'va+2yno76dii*yk9s9cppxzwxv&gp_g(zg@ic=-bb9@0c9$1&^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'testserver',
+    '127.0.0.1',
+]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -97,7 +100,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fred',
-        'USER': 'fred1599',
+        'USER': config.get('admin_user', 'ADMIN'),
         'PASSWORD': config.get('password', 'SECRET_PASSWORD_POSTGRES'),
         'HOST': 'localhost',
         'PORT': '',
