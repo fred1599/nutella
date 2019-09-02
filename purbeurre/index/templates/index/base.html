@@ -27,8 +27,17 @@
     <!-- My Input of page -->
     <link href="{% static 'index/css/myinput.css' %}" rel="stylesheet">
 
+    <!-- My Form of page -->
+    <link href="{% static 'index/css/myform.css' %}" rel="stylesheet">
+
     <!-- favicon -->
     <link rel="icon" href="{% static 'index/images/favicon.ico' %}"/>
+
+    <!-- images results form badge + image -->
+    <link href="{% static 'aliments/css/image_css' %}" rel="stylesheet">
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/cdcf4ac432.js"></script>
 
 
 </head>
@@ -38,17 +47,17 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top" style="font-size:80%">Entreprise PurBeurre</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap">
                 <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="#about">Nos idées</a>
+            <a class="navbar-brand js-scroll-trigger" href="/index/"><img width="10%" height="10%" id="logo" alt='logo' src="{% static 'index/images/logo.png' %}" style="opacity:0.3">Entreprise Purbeurre</a>
+                </li>
+            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap">
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/index/#about">Nos idées</a>
                 </li>
                 <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="#services">Mes aliments</a>
+                    <a class="nav-link js-scroll-trigger" href="/aliments/perso/"><i class="fas fa-carrot"></i></a>
                 </li>
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
@@ -61,12 +70,15 @@
                 </li>
                 {% if not user.is_anonymous %}
                 <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/login/">{{ user }}</a>
+                    <a class="nav-link js-scroll-trigger" href="/account/profil/"><i class="fas fa-user"></i>{{ user }}</a>
                 </li>
                 {% endif %}
                 <li class="nav-item" style="display:inline-block">
-                    <form class="col-lg-8 align-self-baseline" action="/aliments/" method="post">{% csrf_token %}
-                        <input type="search" placeholder="Entrez un mot-clef" name="product" style="width:100%">
+                    <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{% csrf_token %}
+                        <div>
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="product">
+                        <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Chercher</button>
+                        </div>
                     </form>
                 </li>
             </ul>

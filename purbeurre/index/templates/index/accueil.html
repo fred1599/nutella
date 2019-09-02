@@ -9,11 +9,10 @@
                 <h2 class="text-uppercase text-white font-weight-bold">Du gras oui mais de qualité !</h2>
                 <hr class="divider my-4">
             </div>
-            <form class="col-lg-8 align-self-baseline" action="/aliments/" method="post">{% csrf_token %}
-                <p class="text-white-75 font-weight-light mb-5">Trouver un produit de substitution pour ce que vous consommez tous les jours</p>
-                <input type="search" placeholder="Entrez un mot-clef" name="product">
+            <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{% csrf_token %}
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="product">
+                <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Chercher</button>
             </form>
-            </div>
         </div>
     </div>
 </header>

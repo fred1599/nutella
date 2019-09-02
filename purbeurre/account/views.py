@@ -1,4 +1,5 @@
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -6,6 +7,9 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 
 from .forms import ContactForm, RegisterForm
+
+from .models import Profil
+from aliments.models import Aliment
 
 import logging
 
@@ -76,6 +80,16 @@ class RegisterView(FormView):
         return super().form_valid(form)
 
 
+class ProfilView(ListView):
+    template_name = 'account/profil.html'
+    model = Profil
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        context['aliments'] = Aliment.objects.filter(user_set=context['user'])
+        return context
+
 def get_success_login(request):
     message = messages['login']['success']
     return render(request, 'account/success.html', {'message': message})
@@ -97,6 +111,7 @@ def get_error_register(request):
     message = messages['register']['error']
     title = "Vous n'êtes pas enregistré"
     return render(request, 'account/error.html', {'message': message, 'title': title})
+
 
 def disconnect(request):
     logout(request)
