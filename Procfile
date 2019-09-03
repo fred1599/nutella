@@ -1,1 +1,1 @@
-site web: gunicorn purbeurre.wsgi
+site web: gunicorn purbeurre.purbeurre.wsgi
