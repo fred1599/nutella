@@ -30,14 +30,14 @@
     <!-- My Form of page -->
     <link href="{% static 'index/css/myform.css' %}" rel="stylesheet">
 
-    <!-- favicon -->
-    <link rel="icon" href="{% static 'index/images/favicon.ico' %}"/>
-
     <!-- images results form badge + image -->
     <link href="{% static 'aliments/css/image_css' %}" rel="stylesheet">
 
     <!-- font awesome -->
     <script src="https://kit.fontawesome.com/cdcf4ac432.js"></script>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="{% static 'index/images/logo_pur_beurre-favicon.png' %}"/>
 
 
 </head>
@@ -48,26 +48,33 @@
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap">
-                <li class="nav-item" style="display:inline-block">
-            <a class="navbar-brand js-scroll-trigger" href="/index/"><img width="10%" height="10%" id="logo" alt='logo' src="{% static 'index/images/logo.png' %}" style="opacity:0.3">Entreprise Purbeurre</a>
+            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap;">
+                <li class="nav-item" style="display:inline-block;">
+                        <a class="navbar-brand js-scroll-trigger" href="/index/">
+                            <img width="10%" height="10%" id="logo" alt='logo' src="{% static 'index/images/logo_pur_beurre.png' %}">
+                            Entreprise Purbeurre</a>
                 </li>
-            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap">
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/index/#about">Nos idées</a>
                 </li>
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/aliments/perso/"><i class="fas fa-carrot"></i></a>
                 </li>
+                {% if user.is_anonymous %}
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
                 </li>
+                {% endif %}
+                {% if user.is_anonymous %}
                 <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/login/">Se loguer</a>
+                    <a class="nav-link js-scroll-trigger" href="/account/login/"><i class="fas fa-bell"></i>Se loguer</a>
                 </li>
+                {% endif %}
+                {% if user.is_authenticated %}
                 <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/disconnect/">Se déconnecter</a>
+                    <a class="nav-link js-scroll-trigger" href="/account/disconnect/"><i class="fas fa-user-times"></i></a>
                 </li>
+                {% endif %}
                 {% if not user.is_anonymous %}
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/account/profil/"><i class="fas fa-user"></i>{{ user }}</a>
@@ -76,8 +83,8 @@
                 <li class="nav-item" style="display:inline-block">
                     <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{% csrf_token %}
                         <div>
-                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="product">
-                        <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit">Chercher</button>
+                        <input class="form-control mr-sm-2" type="text" placeholder="Votre recherche" aria-label="Search" name="product">
+                        <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit" style="background-color:#DE9440;color:black;">Chercher</button>
                         </div>
                     </form>
                 </li>
@@ -90,6 +97,9 @@
 {% endblock %}
 
 {% block section %}
+{% endblock %}
+
+{% block contact %}
 {% endblock %}
 
 <!-- Footer -->
