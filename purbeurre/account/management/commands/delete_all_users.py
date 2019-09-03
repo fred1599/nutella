@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from purbeurre.settings import config
+from purbeurre.purebeurre.settings import config
 
 
 class Command(BaseCommand):
