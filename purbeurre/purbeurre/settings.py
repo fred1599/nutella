@@ -32,6 +32,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     '*',
+    '0.0.0.0',
 ]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
