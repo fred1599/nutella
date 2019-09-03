@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
-import django_heroku
-
 from configparser import RawConfigParser
 
 
@@ -29,10 +27,9 @@ config.read('.env')
 SECRET_KEY = 'va+2yno76dii*yk9s9cppxzwxv&gp_g(zg@ic=-bb9@0c9$1&^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'testserver',
     '127.0.0.1',
 ]
 
@@ -144,13 +141,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'purebeurre', 'static'),
-]
-
-django_heroku.settings(locals())
+STATIC_URL = BASE_DIR + '/'
+STATIC_ROOT = 'static'
