@@ -29,7 +29,7 @@ config.read('.env')
 SECRET_KEY = 'va+2yno76dii*yk9s9cppxzwxv&gp_g(zg@ic=-bb9@0c9$1&^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'testserver',
