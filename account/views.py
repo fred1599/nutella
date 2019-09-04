@@ -11,7 +11,7 @@ from .forms import ContactForm, RegisterForm
 from .models import Profil
 from aliments.models import Aliment
 
-import logging
+import logging, os
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +67,13 @@ class RegisterView(FormView):
         # non authentifié alors user vaut None, si un user existe, alors enregistrement impossible
         if not user:
             User.objects.create_user(username=username, password=password, email=mail) # création du nouvel utilisateur
-            
+            send_mail(
+                'Inscription sur le site',
+                'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
+                os.getenv('ACCOUNT'),
+                recipient_list=[mail,],
+                fail_silently=True,
+            ) # envoi du mail
 
         else:
             self.success_url = 'error' # renvoi vers la page d'erreur de l'enregistrement
