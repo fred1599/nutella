@@ -31,6 +31,7 @@ ALLOWED_HOSTS = [
     '*',
     '0.0.0.0',
     '127.0.0.1',
+    'https://purbeurre-fred1599.herokuapp.com/'
 ]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
