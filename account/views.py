@@ -108,33 +108,8 @@ class RegisterView(FormView):
 
     def form_valid(self, form):
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            mail = form.cleaned_data['email']
-
-            user = authenticate(self.request, username=username,
-                                password=password)  # on essaye une authentification, si
-            # non authentifié alors user vaut None, si un user existe, alors enregistrement impossible
-            if not user:
-                try:
-                    user = User.objects.create(username=username, password=password,
-                                               email=mail)  # création du nouvel utilisateur
-                    send_mail(
-                        'Inscription sur le site',
-                        'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
-                        os.environ.get('ACCOUNT'),
-                        recipient_list=[mail, ],
-                        fail_silently=True,
-                    )  # envoi du mail
-                except IntegrityError:
-                    self.success_url = 'error'
-            else:
-                self.success_url = 'error'  # renvoi vers la page d'erreur de l'enregistrement
-
-            return super().form_valid(form)
-
-        else:
-            return redirect('index')
+            form.save()
+        return redirect('index')
 
 
 class ProfilView(ListView):
