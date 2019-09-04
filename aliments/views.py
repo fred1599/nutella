@@ -46,9 +46,12 @@ def save_view(request, product):
         substitute = None
         for sub in substitutes:
             for s in sub:
-                if s['product_name_fr'] == product:
-                    substitute = s
-                    break
+                try:
+                    if s['product_name_fr'] == product:
+                        substitute = s
+                        break
+                except KeyError:
+                    continue
 
         if substitute:
             aliment = Aliment.objects.filter(name=substitute['product_name_fr'])
