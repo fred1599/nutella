@@ -86,12 +86,12 @@ TEMPLATES = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.environ.get('HOST')
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = os.environ.get('PORT')
+EMAIL_PORT = 587
 EMAIL_HOST_USER = os.environ.get('ACCOUNT')
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
-SESSION_COOKIE_SECURE = False
+
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
 
 # Database

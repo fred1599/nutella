@@ -70,7 +70,7 @@ class RegisterView(FormView):
             send_mail(
                 'Inscription sur le site',
                 'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
-                os.getenv('ACCOUNT'),
+                os.environ.get('ACCOUNT'),
                 recipient_list=[mail,],
                 fail_silently=True,
             ) # envoi du mail
