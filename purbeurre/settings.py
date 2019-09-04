@@ -91,7 +91,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = os.environ.get('PORT')
 EMAIL_HOST_USER = os.environ.get('ACCOUNT')
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
-
+SESSION_COOKIE_SECURE = False
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
 
 # Database
