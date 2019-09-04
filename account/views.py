@@ -63,19 +63,20 @@ class RegisterView(FormView):
         password = form.cleaned_data['password']
         mail = form.cleaned_data['email']
 
-        user = authenticate(self.request, username=username, password=password)
+        user = authenticate(self.request, username=username, password=password)  # on essaye une authentification, si
+        # non authentifié alors user vaut None, si un user existe, alors enregistrement impossible
         if not user:
-            User.objects.create_user(username=username, password=password, email=mail)
+            User.objects.create_user(username=username, password=password, email=mail) # création du nouvel utilisateur
             send_mail(
                 'Inscription sur le site',
                 'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
                 settings.EMAIL_HOST_USER,
                 recipient_list=[mail,],
                 fail_silently=False,
-            )
+            ) # envoi du mail
 
         else:
-            self.success_url = 'error'
+            self.success_url = 'error' # renvoi vers la page d'erreur de l'enregistrement
 
         return super().form_valid(form)
 
