@@ -18,10 +18,6 @@ import dj_database_url
 import sys
 
 
-config = RawConfigParser()
-config.read('.env')
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -89,11 +85,11 @@ TEMPLATES = [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config.get('email', 'HOST')
+EMAIL_HOST = os.environ.get('HOST')
 EMAIL_USE_TLS = True
-EMAIL_PORT = config.get('email', 'PORT')
-EMAIL_HOST_USER = config.get('email', 'ACCOUNT')
-EMAIL_HOST_PASSWORD = config.get('email', 'PASSWORD')
+EMAIL_PORT = os.environ.get('PORT')
+EMAIL_HOST_USER = os.environ.get('ACCOUNT')
+EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
 
 
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
@@ -106,8 +102,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fred',
-        'USER': config.get('admin_user', 'ADMIN'),
-        'PASSWORD': config.get('password', 'SECRET_PASSWORD_POSTGRES'),
+        'USER': os.environ.get('ADMIN'),
+        'PASSWORD': os.environ.get('SECRET_PASSWORD_POSTGRES'),
         'HOST': 'localhost',
         'PORT': '',
     }
