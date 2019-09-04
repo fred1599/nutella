@@ -92,7 +92,6 @@ TEMPLATES = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('HOST')
-EMAIL_USE_TLS = True
 EMAIL_USE_SSL = True
 EMAIL_PORT = os.environ.get('PORT')
 EMAIL_HOST_USER = os.environ.get('ACCOUNT')
