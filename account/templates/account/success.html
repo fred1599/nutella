@@ -1,0 +1,13 @@
+{% extends 'account/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block script %}
+<script>window.setTimeout("location=('/index/');",2000);</script>
+{% endblock %}
+{% block onglet %}
+<title>Page succès</title>
+{% endblock %}
+{% block title %}
+<h1 class="mt-2">{{ message }} {{ user }}</h1>
+{% endblock %}
+

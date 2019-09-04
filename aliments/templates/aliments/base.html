@@ -1,0 +1,70 @@
+{% extends 'index/base.html' %}
+{% load static %}
+
+{% block header %}
+<header class="masthead" id="head">
+    <script src="{% static 'index/js/jquery.min.js' %}"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/cdcf4ac432.js"></script>
+    <h1 align="center">Résultats pour {{ p.product_name_fr }}</h1>
+    <div class="container col-12">
+        <div class="row">
+            {% for p in s %}
+            <div class="col-sm-4 mx-auto text-center" style="width: 18rem;">
+                <h5 class="p-3 mb-2 bg-dark text-white">{{ p.product_name_fr }}</h5>
+                <div style="position: relative">
+                    <img src="{{ p.image_small_url }}" class="offset-0" style="position: relative; left:6px; top:8px; z-index:0;" height="200px" alt="{{ p.product_name_fr }}"/>
+                    <span class="badge badge-danger" style="position: absolute; z-index:1">{{ p.nutrition_grades_tags.0.upper }}</span>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="card-body" style="display: inline-block;">
+                    <form method="post" action="/aliments/save/{{ p.product_name_fr }}/">{% csrf_token %}
+                        <div>
+                            <input type="checkbox" name="choice" value="{{ p.product_name_fr }};{{p.url}};{{p.nutrition_grades_tags.0}};{{p.image_small_url}}">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-floppy-o" aria-hidden="true"></i>  Sauvegarder {{ p.product_name_fr }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row" style="position:relative; top:20px;">
+            {% if page_precedent > 0 %}
+            <a href="/aliments/page/{{ page_precedent }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">< Précédent</a>
+            {% else %}
+            <div class="col-sm-2">
+            </div>
+            {% endif %}
+            <div class="col-sm-8"></div>
+            <a href="/aliments/page/{{ page_suivant }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">Suivant ></a>
+        </div>
+        {% if user.is_authenticated %}
+        <form method="post" action="/aliments/save/" id="save">{{ csrf_input }}
+            <button type="submit" class="btn btn-primary">Sauvegarder les produits cochés</button>
+        </form>
+        {% endif %}
+    </div>
+    <script>
+           $('#save').on('submit',function(e){
+               e.preventDefault();
+               array = [];
+               $("input:checkbox[name=choice]:checked").each(function(){
+                   array.push($(this).val());
+               });
+               $.ajax({
+                   type     : "POST",
+                   cache    : false,
+                   url      : "/aliments/save/",
+                   data     : {"results": array},
+                   success  : function(data) {
+                       window.location.href = '/account/profil/';
+                   }
+               });
+
+           });
+    </script>
+</header>
+{% endblock header %}

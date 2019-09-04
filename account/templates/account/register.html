@@ -1,0 +1,15 @@
+{% extends 'account/base.html' %}
+
+{% load crispy_forms_tags %}
+{% block onglet %}
+<title>Enregistrement</title>
+{% endblock %}
+{% block title %}
+<h1 class="mt-2">Enregistrement</h1>
+{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-success">S'enregistrer</button>
+</form>
+{% endblock %}
