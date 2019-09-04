@@ -10,15 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-
 import os
-
-from configparser import RawConfigParser
-import dj_database_url
 import sys
 
-from configparser import RawConfigParser
-
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -97,9 +92,7 @@ EMAIL_PORT = os.environ.get('PORT')
 EMAIL_HOST_USER = os.environ.get('ACCOUNT')
 EMAIL_HOST_PASSWORD = os.environ.get('PASSWORD')
 
-
 WSGI_APPLICATION = 'purbeurre.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -135,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
