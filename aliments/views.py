@@ -10,6 +10,7 @@ from .utils import (
 from aliments.models import Aliment
 
 
+@csrf_exempt
 def product_view(request, page_number):
     if page_number == 1 and request.POST:
         if 'product' not in request.POST:
@@ -20,7 +21,7 @@ def product_view(request, page_number):
         request.session['product'] = get_product_by_name(query)
         request.session['substitutes'] = wrap_list(get_substitutes(request.session['product']), 6)
 
-    if request.POST:
+    if page_number >= 1:
         if 'product' not in request.session and 'substitutes' not in request.session:
             return redirect('index')
         product = request.session['product']
