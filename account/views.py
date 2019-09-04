@@ -65,6 +65,7 @@ class RegisterView(FormView):
 
         user = authenticate(self.request, username=username, password=password)
         if not user:
+            User.objects.create(username=username, password=password, email=mail)
             send_mail(
                 'Inscription sur le site',
                 'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
@@ -72,7 +73,6 @@ class RegisterView(FormView):
                 recipient_list=[mail,],
                 fail_silently=False,
             )
-            User.objects.create(username=username, password=password, email=mail)
 
         else:
             self.success_url = 'error'
