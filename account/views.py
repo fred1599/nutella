@@ -1,17 +1,27 @@
+import logging
+import os
+import urllib.parse
+
+from django.contrib.auth import authenticate, login, logout, REDIRECT_FIELD_NAME
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
+from django.core.mail import send_mail
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.conf import settings
-from django.contrib.auth import authenticate, login, logout
 
-from .forms import ContactForm, RegisterForm
-
-from .models import Profil
 from aliments.models import Aliment
+from .forms import ContactForm, RegisterForm
+from .models import Profil
 
-import logging, os
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
+from django.conf import settings
+
+
+from django.http import HttpResponseRedirect
 
 logger = logging.getLogger(__name__)
 
@@ -30,27 +40,65 @@ messages = {
 
 class LoginView(FormView):
     template_name = "account/login.html"
-    form_class = ContactForm
+    form_class = AuthenticationForm
     success_url = 'success'
-    user = None
+    redirect_field_name = REDIRECT_FIELD_NAME
+
+    @method_decorator(csrf_protect)
+    @method_decorator(never_cache)
+    def dispatch(self, *args, **kwargs):
+        return super(LoginView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
+        """
+        The user has provided valid credentials (this was checked in AuthenticationForm.is_valid()). So now we
+        can log him in.
+        """
+        login(self.request, form.get_user())
+        return HttpResponseRedirect(self.get_success_url())
 
-        try:
-            self.user = User.objects.get(username=username, password=password)
-            login(self.request, self.user)
-        except User.DoesNotExist:
-            logger.warning("L'utilisateur {} n'a pas réussi à se connecter à ".format(username))
-            self.success_url = 'error'
+    def get_success_url(self):
+        if self.success_url:
+            redirect_to = self.success_url
+        else:
+            redirect_to = self.request.REQUEST.get(self.redirect_field_name, '')
 
-        return super().form_valid(form)
+        netloc = urllib.parse.urlparse(redirect_to)[1]
+        if not redirect_to:
+            redirect_to = settings.LOGIN_REDIRECT_URL
+        # Security check -- don't allow redirection to a different host.
+        elif netloc and netloc != self.request.get_host():
+            redirect_to = settings.LOGIN_REDIRECT_URL
+        return redirect_to
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.user
-        return context
+    def set_test_cookie(self):
+        self.request.session.set_test_cookie()
+
+    def check_and_delete_test_cookie(self):
+        if self.request.session.test_cookie_worked():
+            self.request.session.delete_test_cookie()
+            return True
+        return False
+
+    def get(self, request, *args, **kwargs):
+        """
+        Same as django.views.generic.edit.ProcessFormView.get(), but adds test cookie stuff
+        """
+        self.set_test_cookie()
+        return super(LoginView, self).get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Same as django.views.generic.edit.ProcessFormView.post(), but adds test cookie stuff
+        """
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            self.check_and_delete_test_cookie()
+            return self.form_valid(form)
+        else:
+            self.set_test_cookie()
+            return self.form_invalid(form)
 
 
 class RegisterView(FormView):
@@ -59,26 +107,34 @@ class RegisterView(FormView):
     success_url = 'success'
 
     def form_valid(self, form):
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        mail = form.cleaned_data['email']
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            mail = form.cleaned_data['email']
 
-        user = authenticate(self.request, username=username, password=password)  # on essaye une authentification, si
-        # non authentifié alors user vaut None, si un user existe, alors enregistrement impossible
-        if not user:
-            User.objects.create_user(username=username, password=password, email=mail) # création du nouvel utilisateur
-            send_mail(
-                'Inscription sur le site',
-                'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
-                os.environ.get('ACCOUNT'),
-                recipient_list=[mail,],
-                fail_silently=True,
-            ) # envoi du mail
+            user = authenticate(self.request, username=username,
+                                password=password)  # on essaye une authentification, si
+            # non authentifié alors user vaut None, si un user existe, alors enregistrement impossible
+            if not user:
+                try:
+                    user = User.objects.create(username=username, password=password,
+                                               email=mail)  # création du nouvel utilisateur
+                    send_mail(
+                        'Inscription sur le site',
+                        'Bienvenue sur le site {}\nVotre mot de passe est: {}'.format(username, password),
+                        os.environ.get('ACCOUNT'),
+                        recipient_list=[mail, ],
+                        fail_silently=True,
+                    )  # envoi du mail
+                except IntegrityError:
+                    self.success_url = 'error'
+            else:
+                self.success_url = 'error'  # renvoi vers la page d'erreur de l'enregistrement
+
+            return super().form_valid(form)
 
         else:
-            self.success_url = 'error' # renvoi vers la page d'erreur de l'enregistrement
-
-        return super().form_valid(form)
+            return redirect('index')
 
 
 class ProfilView(ListView):
@@ -90,6 +146,7 @@ class ProfilView(ListView):
         context['user'] = self.request.user
         context['aliments'] = Aliment.objects.filter(user_set=context['user'])
         return context
+
 
 def get_success_login(request):
     message = messages['login']['success']
