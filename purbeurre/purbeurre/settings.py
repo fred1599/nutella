@@ -15,6 +15,7 @@ import os
 
 from configparser import RawConfigParser
 import dj_database_url
+import sys
 
 
 config = RawConfigParser()
@@ -36,7 +37,7 @@ ALLOWED_HOSTS = [
 ]
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+sys.path.append(BASE_DIR)
 # Application definition
 
 INSTALLED_APPS = [
