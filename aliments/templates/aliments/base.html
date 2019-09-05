@@ -35,18 +35,21 @@
             {% if page_precedent > 0 %}
             <a href="/aliments/page/{{ page_precedent }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">< Précédent</a>
             {% else %}
-            <div class="col-sm-2">
-            </div>
+            <div class="col-sm-2"></div>
             {% endif %}
-            <div class="col-sm-8"></div>
+            <div class="col-sm-2"></div>
+            {% if user.is_authenticated %}
+            <button type="submit"  form="save" class="btn btn-primary btn-lg active col-sm-4">Sauvegarder les produits cochés</button>
+            {% else %}
+            <div class="col-sm-4"></div>
+            {% endif %}
+            <div class="col-sm-2"></div>
             <a href="/aliments/page/{{ page_suivant }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">Suivant ></a>
         </div>
-        {% if user.is_authenticated %}
-        <form method="post" action="/aliments/save/" id="save">{{ csrf_input }}
-            <button type="submit" class="btn btn-primary">Sauvegarder les produits cochés</button>
-        </form>
-        {% endif %}
     </div>
+
+    <form method="post" action="/aliments/save/" id="save">{{ csrf_input }}
+    </form>
     <script>
            $('#save').on('submit',function(e){
                e.preventDefault();
