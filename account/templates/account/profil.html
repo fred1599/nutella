@@ -5,16 +5,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Profil de {{ user.username }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
         #tw1, #tw2{
             border-color: white;
             background-color: brown;
-            width: 70%;
+            width: 60%;
         }
 
         #tl1, #tl2{
@@ -28,9 +35,11 @@
         }
 
         #table2{
-            width:50%;
-            margin-left:auto;
-            margin-right:auto;
+            width:100%;
+            position:relative;
+            top:300px;
+            margin-left: 15%;
+            margin-right: 15%;
         }
 
         .row{
@@ -49,39 +58,124 @@
         #aliment{
             margin-left: 30px;
         }
+
+
+
+
     </style>
+
+    <!-- Font Awesome Icons -->
+    <link href="{% static 'index/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'
+          rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="{% static 'index/css/magnific-popup.css' %}" rel="stylesheet">
+
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="{% static 'index/css/creative.min.css' %}" rel="stylesheet">
+
+    <!-- My Input of page -->
+    <link href="{% static 'index/css/myinput.css' %}" rel="stylesheet">
+
+    <!-- My Form of page -->
+    <link href="{% static 'index/css/myform.css' %}" rel="stylesheet">
+
+    <!-- images results form badge + image -->
+    <link href="{% static 'aliments/css/image_css' %}" rel="stylesheet">
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/cdcf4ac432.js"></script>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="{% static 'index/images/logo_pur_beurre-favicon.png' %}"/>
+
 </head>
+
 <body background="{% static 'index/images/bg-masthead.jpg' %}">
-<div class="container">
-    <div class="row">
-        <div id="table" class="col-sm">
-            <table class="table table-bordered">
-                <thead class="thead-dark" id="td1">
-                <tr>
-                    <th id="tc" class="text-center" colspan="2">Profil de {{ user.get_username }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td id="tl1" class="text-white">Nom d'utilisateur:</td>
-                    <td id="tw1" class="text-white">{{ user.username }}</td>
-                </tr>
-                <tr>
-                    <td id="tl2" class="text-white">Email:</td>
-                    <td id="tw2" class="text-white">{{ user.email }}</td>
-                </tr>
-                </tbody>
-            </table>
+<section>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap;">
+                <li class="nav-item" style="display:inline-block;">
+                    <a class="navbar-brand js-scroll-trigger" href="/index/" style="position:relative; bottom:15px;">
+                        <img width="10%" height="10%" id="logo" alt='logo'
+                             src="{% static 'index/images/logo_pur_beurre.png' %}">
+                        Entreprise Purbeurre</a>
+                </li>
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/index/#about">Nos idées</a>
+                </li>
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/aliments/perso/"><i class="fas fa-carrot"></i></a>
+                </li>
+                {% if user.is_anonymous %}
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
+                </li>
+                {% endif %}
+                {% if user.is_anonymous %}
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/account/login/"><i class="fas fa-bell"></i>Se
+                        loguer</a>
+                </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/account/disconnect/"><i class="fas fa-user-times"></i></a>
+                </li>
+                {% endif %}
+                {% if not user.is_anonymous %}
+                <li class="nav-item" style="display:inline-block">
+                    <a class="nav-link js-scroll-trigger" href="/account/profil/"><i class="fas fa-user"></i>{{ user }}</a>
+                </li>
+                {% endif %}
+                <li class="nav-item" style="display:inline-block; position:relative; bottom:28px;">
+                    <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{%
+                        csrf_token %}
+                        <div>
+                            <input class="form-control mr-sm-2" type="text" placeholder="Votre recherche"
+                                   aria-label="Search" name="product">
+                            <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit"
+                                    style="background-color:#DE9440;color:black;">Chercher
+                            </button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
         </div>
-        <div id="button" class="col-sm">
-            <form action="/index">
-                <input id="sub" type="submit" value="Retour page index" style="background:brown;color:white">
-            </form>
+    </nav>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row sm-12">
+            <div class="col-sm-6" style="position:absolute; top:100px; margin:0 auto:">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th id="tc" class="text-center" colspan="2">Profil de {{ user.get_username }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="tl1" class="text-white">Nom d'utilisateur:</td>
+                        <td id="tw1" class="text-white">{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td id="tl2" class="text-white">Email:</td>
+                        <td id="tw2" class="text-white">{{ user.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-2"></div>
         </div>
     </div>
-</div>
 
-<div class="container-fluid">
     <div class="row">
         <table id="table2" class="table table-bordered">
             <thead class="thead-dark" id="td2">
@@ -91,23 +185,43 @@
             </thead>
             <tbody>
             {% for aliment in aliments %}
-                <tr>
-                    <td id="al" class="text-white">
-                        {{ aliment|form_aliment }}
-                        <form action="/aliments/delete/{{ aliment.name }}/" method="post">{% csrf_token %}
-                            <button type="submit" class="close" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td id="al" class="text-white">
+                    {{ aliment|form_aliment }}
+                    <form action="/aliments/delete/{{ aliment.name }}/" method="post">{% csrf_token %}
+                        <button type="submit" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </form>
+                </td>
+            </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</section>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'index/js/jquery.min.js' %}"></script>
+<script src="{% static 'index/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'index/js/jquery.easing.min.js' %}"></script>
+<script src="{% static 'index/js/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'index/js/creative.min.js' %}"></script>
+
 </body>
 </html>
