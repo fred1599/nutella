@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+{% extends 'index/base.html' %}
 {% load static %}
 {% load tag_aliments %}
 <head>
@@ -17,52 +18,6 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <style>
-        #tw1, #tw2{
-            border-color: white;
-            background-color: brown;
-            width: 60%;
-        }
-
-        #tl1, #tl2{
-            border-color: white;
-            background-color: brown;
-            text-color: white;
-        }
-
-        #tc, #tc1{
-            border-color: white;
-        }
-
-        #table2{
-            width:100%;
-            position:relative;
-            top:300px;
-            margin-left: 15%;
-            margin-right: 15%;
-        }
-
-        .row{
-            margin-left:auto;
-            margin-right:auto;
-        }
-
-        #al{
-            border-color: white;
-            background-color: brown;
-            width: 50%;
-            margin-left:auto;
-            margin-right:auto;
-        }
-
-        #aliment{
-            margin-left: 30px;
-        }
-
-
-
-
-    </style>
 
     <!-- Font Awesome Icons -->
     <link href="{% static 'index/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -95,87 +50,78 @@
 
 </head>
 
+{% block header %}
+<header class="masthead" id="head">
+    <style>
+        #tw1, #tw2{
+            border-color: white;
+            background-color: brown;
+            width: 60%;
+        }
+
+        #tl1, #tl2{
+            border-color: white;
+            background-color: brown;
+            text-color: white;
+        }
+
+        #tc, #tc1{
+            border-color: white;
+        }
+
+        #table2{
+            width:100%;
+            position:relative;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
+
+        .row{
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        #al{
+            border-color: white;
+            background-color: brown;
+            width: 50%;
+            margin-left:auto;
+            margin-right:auto;
+        }
+
+        #aliment{
+            margin-left: 30px;
+        }
+    </style>
+    <section class="page-section">
+        <div class="row col-6">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                <tr>
+                    <th id="tc" class="text-center" colspan="2">Profil de {{ user.get_username }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td id="tl1" class="text-white">Nom d'utilisateur:</td>
+                    <td id="tw1" class="text-white">{{ user.username }}</td>
+                </tr>
+                <tr>
+                    <td id="tl2" class="text-white">Email:</td>
+                    <td id="tw2" class="text-white">{{ user.email }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+</header>
+{% endblock header %}
+
+{% block section %}
 <body background="{% static 'index/images/bg-masthead.jpg' %}">
-<section>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap;">
-                <li class="nav-item" style="display:inline-block;">
-                    <a class="navbar-brand js-scroll-trigger" href="/index/" style="position:relative; bottom:15px;">
-                        <img width="10%" height="10%" id="logo" alt='logo'
-                             src="{% static 'index/images/logo_pur_beurre.png' %}">
-                        Entreprise Purbeurre</a>
-                </li>
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/index/#about">Nos idées</a>
-                </li>
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/aliments/perso/"><i class="fas fa-carrot"></i></a>
-                </li>
-                {% if user.is_anonymous %}
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/register/">S'enregistrer</a>
-                </li>
-                {% endif %}
-                {% if user.is_anonymous %}
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/login/"><i class="fas fa-bell"></i>Se
-                        loguer</a>
-                </li>
-                {% endif %}
-                {% if user.is_authenticated %}
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/disconnect/"><i class="fas fa-user-times"></i></a>
-                </li>
-                {% endif %}
-                {% if not user.is_anonymous %}
-                <li class="nav-item" style="display:inline-block">
-                    <a class="nav-link js-scroll-trigger" href="/account/profil/"><i class="fas fa-user"></i>{{ user }}</a>
-                </li>
-                {% endif %}
-                <li class="nav-item" style="display:inline-block; position:relative; bottom:28px;">
-                    <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{%
-                        csrf_token %}
-                        <div>
-                            <input class="form-control mr-sm-2" type="text" placeholder="Votre recherche"
-                                   aria-label="Search" name="product">
-                            <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit"
-                                    style="background-color:#DE9440;color:black;">Chercher
-                            </button>
-                        </div>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</section>
-
-<section>
-    <div class="container">
-        <div class="row sm-12">
-            <div class="col-sm-6" style="position:absolute; top:100px; margin:0 auto:">
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th id="tc" class="text-center" colspan="2">Profil de {{ user.get_username }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td id="tl1" class="text-white">Nom d'utilisateur:</td>
-                        <td id="tw1" class="text-white">{{ user.username }}</td>
-                    </tr>
-                    <tr>
-                        <td id="tl2" class="text-white">Email:</td>
-                        <td id="tw2" class="text-white">{{ user.email }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-sm-2"></div>
-        </div>
-    </div>
-
+<section class="page-section">
     <div class="row">
         <table id="table2" class="table table-bordered">
             <thead class="thead-dark" id="td2">
@@ -201,7 +147,6 @@
     </div>
 </section>
 
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -222,6 +167,8 @@
 
 <!-- Custom scripts for this template -->
 <script src="{% static 'index/js/creative.min.js' %}"></script>
-
+{% endblock section %}
 </body>
+
+
 </html>

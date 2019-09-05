@@ -1,22 +1,21 @@
+<!DOCTYPE html>
 {% extends 'index/base.html' %}
 {% load static %}
 
-{% block header %}
-<header class="masthead" id="head">
-    <div class="card card-cascade narrower">
-        <div class="row">
-            <p style="position:relative; left:50%;">Mes aliments</p>
-        </div>
+{% block section %}
+<body background="{% static 'index/images/bg-masthead.jpg' %}">
+<section class="page-section">
+        <h2 class="text-white text-center">MES ALIMENTS</h2>
 
         <div class="px-4">
 
             <div class="table-wrapper">
                 <!--Table-->
-                <table class="table table-hover mb-0">
+                <table class="table mb-0">
 
                     <!--Table head-->
                     <thead>
-                    <tr>
+                    <tr class="bg-light">
                         <th class="th-lg">
                             <p>Nom
                                 <i class="fas fa-sort ml-1"></i>
@@ -45,10 +44,10 @@
                     <tbody>
                     {% for aliment in aliments %}
                     <tr bgcolor="#DE9440">
-                        <td>{{ aliment.name }}</td>
-                        <td align="center">{{ aliment.score }}</td>
-                        <td align="center"><a href="{{ aliment.url }}">Lien</a></td>
-                        <td align="center"><img src="{{ aliment.url_image }}"></td>
+                        <td style="vertical-align:middle">{{ aliment.name }}</td>
+                        <td style="vertical-align:middle" align="center">{{ aliment.score }}</td>
+                        <td style="vertical-align:middle" align="center"><a href="{{ aliment.url }}">Lien</a></td>
+                        <td style="vertical-align:middle" align="center"><img src="{{ aliment.url_image }}"></td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -58,8 +57,20 @@
             </div>
 
         </div>
+</section>
+{% endblock section %}
 
-    </div>
-    <!-- Table with panel -->
-</header>
-{% endblock header %}
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'index/js/jquery.min.js' %}"></script>
+<script src="{% static 'index/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Plugin JavaScript -->
+<script src="{% static 'index/js/jquery.easing.min.js' %}"></script>
+<script src="{% static 'index/js/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{% static 'index/js/creative.min.js' %}"></script>
+
+</body>
+
+</html>
