@@ -13,7 +13,9 @@
             <div class="col-sm-4 mx-auto text-center" style="width: 18rem;">
                 <h5 class="p-3 mb-2 bg-dark text-white">{{ p.product_name_fr }}</h5>
                 <div style="position: relative">
+                    <a href="/aliments/details/{{ p.product_name_fr }}">
                     <img src="{{ p.image_small_url }}" class="offset-0" style="position: relative; left:6px; top:8px; z-index:0;" height="200px" alt="{{ p.product_name_fr }}"/>
+                    </a>
                     <span class="badge badge-danger" style="position: absolute; z-index:1">{{ p.nutrition_grades_tags.0.upper }}</span>
                 </div>
                 {% if user.is_authenticated %}

@@ -94,3 +94,20 @@ def display(request):
         aliments = Aliment.objects.all()
         return render(request, 'aliments/food.html', {'aliments': aliments})
     return redirect('index')
+
+
+def detail_view(request, name_product):
+    substitutes = request.session['substitutes']
+    infos = ('product_name_fr', 'categories', 'nutrition_grades_tags', 'image_small_url', 'ingredients_text_fr')
+    res = []
+    for list_s in substitutes:
+        for s in list_s:
+            if s['product_name_fr'] == name_product:
+                for info in infos:
+                    if info == 'nutrition_grades_tags':
+                        val = s[info][0]
+                    else:
+                        val = s[info]
+                    res.append(val)
+                return render(request, 'aliments/details.html', {'product': res})
+    return redirect('index')
