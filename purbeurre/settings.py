@@ -22,7 +22,7 @@ import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -66,6 +66,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'purbeurre.urls'
+
+LOGIN_REDIRECT_URL = '/account/profil/'
 
 TEMPLATES = [
     {

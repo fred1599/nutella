@@ -11,6 +11,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
+from django.views.decorators.debug import sensitive_post_parameters
 
 from aliments.models import Aliment
 from .forms import RegisterForm
@@ -37,8 +38,9 @@ class LoginView(FormView):
     success_url = 'success'
     redirect_field_name = REDIRECT_FIELD_NAME
 
-    @method_decorator(csrf_protect)
-    @method_decorator(never_cache)
+    @method_decorator(sensitive_post_parameters())  # Empêche les informations d'être divulgué en cas d'erreur
+    @method_decorator(csrf_protect)  # Protection contre les attaques CSRF
+    @method_decorator(never_cache)  # Jamais de cache
     def dispatch(self, *args, **kwargs):
         return super(LoginView, self).dispatch(*args, **kwargs)
 
@@ -60,11 +62,11 @@ class LoginView(FormView):
         return redirect_to
 
     def set_test_cookie(self):
-        self.request.session.set_test_cookie()
+        self.request.session.set_test_cookie()  # Vérifie navigateur de l’utilisateur si prend en charge les cookies
 
     def check_and_delete_test_cookie(self):
-        if self.request.session.test_cookie_worked():
-            self.request.session.delete_test_cookie()
+        if self.request.session.test_cookie_worked():  # Si le test cookie fonctionne
+            self.request.session.delete_test_cookie()  # On supprime le cookie créé
             return True
         return False
 
@@ -80,7 +82,7 @@ class LoginView(FormView):
             return self.form_valid(form)
         else:
             self.set_test_cookie()
-            return self.form_invalid(form)
+            return self.form_invalid(form)  # Réponse dans le contexte sur formulaire non valide
 
 
 class RegisterView(FormView):
