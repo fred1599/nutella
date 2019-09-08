@@ -14,18 +14,18 @@
                 <h5 class="p-3 mb-2 bg-dark text-white">{{ p.product_name_fr }}</h5>
                 <div style="position: relative">
                     <a href="/aliments/details/{{ p.product_name_fr }}">
-                    <img src="{{ p.image_small_url }}" class="offset-0" style="position: relative; left:6px; top:8px; z-index:0;" height="200px" alt="{{ p.product_name_fr }}"/>
+                        <img alt="{{ p.product_name_fr }}" class="offset-0"
+                             height="200px" src="{{ p.image_small_url }}"
+                             style="position: relative; left:6px; top:8px; z-index:0;"/>
                     </a>
                     <span class="badge badge-danger" style="position: absolute; z-index:1">{{ p.nutrition_grades_tags.0.upper }}</span>
                 </div>
                 {% if user.is_authenticated %}
                 <div class="card-body" style="display: inline-block;">
-                    <form method="post" action="/aliments/save/{{ p.product_name_fr }}/">{% csrf_token %}
+                    <form action="/aliments/save/{{ p.product_name_fr }}/" method="post">{% csrf_token %}
                         <div>
-                            <input type="checkbox" name="choice" value="{{ p.product_name_fr }};{{p.url}};{{p.nutrition_grades_tags.0}};{{p.image_small_url}}">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-floppy-o" aria-hidden="true"></i>  Sauvegarder {{ p.product_name_fr }}
-                            </button>
+                            <input name="choice" type="checkbox" value="{{ p.product_name_fr }};{{p.url}};{{p.nutrition_grades_tags.0}};{{p.image_small_url}}">
+                            <button class="btn btn-primary" type="submit"><i aria-hidden="true" class="fa fa-floppy-o"></i> Sauvegarder {{ p.product_name_fr }}</button>
                         </div>
                     </form>
                 </div>
@@ -35,22 +35,26 @@
         </div>
         <div class="row" style="position:relative; top:20px;">
             {% if page_precedent > 0 %}
-            <a href="/aliments/page/{{ page_precedent }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">< Précédent</a>
+            <a aria-pressed="true" class="btn btn-primary btn-lg active col-sm-2" href="/aliments/page/{{ page_precedent }}/"
+               role="button">< Précédent</a>
             {% else %}
             <div class="col-sm-2"></div>
             {% endif %}
             <div class="col-sm-2"></div>
             {% if user.is_authenticated %}
-            <button type="submit"  form="save" class="btn btn-primary btn-lg active col-sm-4">Sauvegarder les produits cochés</button>
+            <button class="btn btn-primary btn-lg active col-sm-4" form="save" type="submit">Sauvegarder les produits
+                cochés
+            </button>
             {% else %}
             <div class="col-sm-4"></div>
             {% endif %}
             <div class="col-sm-2"></div>
-            <a href="/aliments/page/{{ page_suivant }}/" class="btn btn-primary btn-lg active col-sm-2" role="button" aria-pressed="true">Suivant ></a>
+            <a aria-pressed="true" class="btn btn-primary btn-lg active col-sm-2" href="/aliments/page/{{ page_suivant }}/"
+               role="button">Suivant ></a>
         </div>
     </div>
 
-    <form method="post" action="/aliments/save/" id="save">{{ csrf_input }}
+    <form action="/aliments/save/" id="save" method="post">{{ csrf_input }}
     </form>
     <script>
            $('#save').on('submit',function(e){
@@ -70,6 +74,7 @@
                });
 
            });
+
     </script>
 </header>
 {% endblock header %}

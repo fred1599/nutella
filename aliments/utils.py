@@ -1,11 +1,10 @@
+import logging
 from random import choice
 from string import punctuation
 
-from aliments.models import Aliment, Favoris
-
 import requests
 
-import logging
+from aliments.models import Favoris
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +44,7 @@ def get_substitutes(p1):
     if not p1:
         return None
 
+    # traitement du message d'erreur au cas où la catégorie n'existe pas dans la base open food facts
     category = p1.get('categories', None)
     if not category:
         name = p1.get('product_name_fr', None)
@@ -59,6 +59,7 @@ def get_substitutes(p1):
     products = []
     api_url = "https://fr.openfoodfacts.org/cgi/search.pl?"
 
+    # Recherche dans la base open food facts
     for cat in category:
         params = {
             'tagtype_0': 'categories',
@@ -77,11 +78,13 @@ def get_substitutes(p1):
         logger.info('Pas de meilleur substitut pour le score')
         return [p1, ]
 
+    # test si score existe, il peut être de valeur 'unknow'
     score_grade_p1 = p1['nutrition_grades_tags'][0]
     if len(score_grade_p1) != 1:
         logging.warning('les scores ne sont pas comparables avec {}'.format(score_grade_p1))
         return [p1, ]
 
+    # On ajoute tous les substituts avec un meilleur score
     substitutes = []
     for product in products:
         score_grade_substitut = product['nutrition_grades_tags'][0]  # on vérifie le score du substitut
@@ -93,9 +96,13 @@ def get_substitutes(p1):
 
 
 def add_product_favorite(product):
+    """
+    Ajout d'un produit dans les favoris
+    :param product: objet Aliment
+    """
     try:
-        #  On vérifie si le produit n'est pas dans les favoris
-        favourite = Favoris.objects.get(
+        #  On vérifie si le produit n'est pas dans les favoris pour l'utilisateur connecté
+        Favoris.objects.get(
             user=product.user, aliment_set__name=product.name, aliment_set__url=product.url
         )
     except Favoris.DoesNotExist:
@@ -104,8 +111,15 @@ def add_product_favorite(product):
 
 
 def wrap_list(fruits, step):
+    """
+    Découpage en partie de résultats
+    Exemple results = [[..., ..., ...], [..., ..., ...], ...]
+    :param fruits: tous les produits sur une seule liste
+    :param step: Découpage en step parties, dans notre cas 6 pour avoir 6 résultats par page
+    :return:
+    """
     pages = []
     length = len(fruits)
-    for i in range(0, length, step+1):
-        pages.append(fruits[i:i+step])
+    for i in range(0, length, step + 1):
+        pages.append(fruits[i:i + step])
     return pages

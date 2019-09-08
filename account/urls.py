@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import (
     LoginView, get_success_register, get_error_register,
     RegisterView, get_success_login, get_error_login,

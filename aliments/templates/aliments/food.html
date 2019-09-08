@@ -5,58 +5,58 @@
 {% block section %}
 <body background="{% static 'index/images/bg-masthead.jpg' %}">
 <section class="page-section">
-        <h2 class="text-white text-center">MES ALIMENTS</h2>
+    <h2 class="text-white text-center">MES ALIMENTS</h2>
 
-        <div class="px-4">
+    <div class="px-4">
 
-            <div class="table-wrapper">
-                <!--Table-->
-                <table class="table mb-0">
+        <div class="table-wrapper">
+            <!--Table-->
+            <table class="table mb-0">
 
-                    <!--Table head-->
-                    <thead>
-                    <tr class="bg-light">
-                        <th class="th-lg">
-                            <p>Nom
-                                <i class="fas fa-sort ml-1"></i>
-                            </p>
-                        </th>
-                        <th class="th-lg">
-                            <p align="center">Score
-                                <i class="fas fa-sort ml-1"></i>
-                            </p>
-                        </th>
-                        <th class="th-lg">
-                            <p align="center">Détails
-                                <i class="fas fa-sort ml-1"></i>
-                            </p>
-                        </th>
-                        <th class="th-lg">
-                            <p align="center">Image
-                                <i class="fas fa-sort ml-1"></i>
-                            </p>
-                        </th>
-                    </tr>
-                    </thead>
-                    <!--Table head-->
+                <!--Table head-->
+                <thead>
+                <tr class="bg-light">
+                    <th class="th-lg">
+                        <p>Nom
+                            <i class="fas fa-sort ml-1"></i>
+                        </p>
+                    </th>
+                    <th class="th-lg">
+                        <p align="center">Score
+                            <i class="fas fa-sort ml-1"></i>
+                        </p>
+                    </th>
+                    <th class="th-lg">
+                        <p align="center">Détails
+                            <i class="fas fa-sort ml-1"></i>
+                        </p>
+                    </th>
+                    <th class="th-lg">
+                        <p align="center">Image
+                            <i class="fas fa-sort ml-1"></i>
+                        </p>
+                    </th>
+                </tr>
+                </thead>
+                <!--Table head-->
 
-                    <!--Table body-->
-                    <tbody>
-                    {% for aliment in aliments %}
-                    <tr bgcolor="#DE9440">
-                        <td style="vertical-align:middle">{{ aliment.name }}</td>
-                        <td style="vertical-align:middle" align="center">{{ aliment.score }}</td>
-                        <td style="vertical-align:middle" align="center"><a href="{{ aliment.url }}">Lien</a></td>
-                        <td style="vertical-align:middle" align="center"><img src="{{ aliment.url_image }}"></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                    <!--Table body-->
-                </table>
-                <!--Table-->
-            </div>
-
+                <!--Table body-->
+                <tbody>
+                {% for aliment in aliments %}
+                <tr bgcolor="#DE9440">
+                    <td style="vertical-align:middle">{{ aliment.name }}</td>
+                    <td align="center" style="vertical-align:middle">{{ aliment.score }}</td>
+                    <td align="center" style="vertical-align:middle"><a href="{{ aliment.url }}">Lien</a></td>
+                    <td align="center" style="vertical-align:middle"><img src="{{ aliment.url_image }}"></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
         </div>
+
+    </div>
 </section>
 {% endblock section %}
 

@@ -5,9 +5,9 @@
 <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Site Purbeurre">
-    <meta name="author" content="fred1599">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta content="Site Purbeurre" name="description">
+    <meta content="fred1599" name="author">
 
     <title>PurBeurre</title>
 
@@ -16,7 +16,8 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic'
+          rel='stylesheet' type='text/css'>
 
     <!-- Plugin CSS -->
     <link href="{% static 'index/css/magnific-popup.css' %}" rel="stylesheet">
@@ -37,7 +38,7 @@
     <script src="https://kit.fontawesome.com/cdcf4ac432.js"></script>
 
     <!-- favicon -->
-    <link rel="icon" type="image/png" href="{% static 'index/images/logo_pur_beurre-favicon.png' %}"/>
+    <link href="{% static 'index/images/logo_pur_beurre-favicon.png' %}" rel="icon" type="image/png"/>
 
 
 </head>
@@ -49,9 +50,10 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto my-2 my-lg-0" style="white-space: nowrap;">
                 <li class="nav-item" style="display:inline-block;">
-                        <a class="navbar-brand js-scroll-trigger" href="/index/" style="position:relative; bottom:15px;">
-                            <img width="10%" height="10%" id="logo" alt='logo' src="{% static 'index/images/logo_pur_beurre.png' %}">
-                            Entreprise Purbeurre</a>
+                    <a class="navbar-brand js-scroll-trigger" href="/index/" style="position:relative; bottom:15px;">
+                        <img alt='logo' height="10%" id="logo" src="{% static 'index/images/logo_pur_beurre.png' %}"
+                             width="10%">
+                        Entreprise Purbeurre</a>
                 </li>
                 <li class="nav-item" style="display:inline-block">
                     <a class="nav-link js-scroll-trigger" href="/index/#about">Nos idées</a>
@@ -80,10 +82,13 @@
                 </li>
                 {% endif %}
                 <li class="nav-item" style="display:inline-block">
-                    <form action="/aliments/page/1/" class="form-inline mr-auto" method="post" autocomplete="off">{% csrf_token %}
+                    <form action="/aliments/page/1/" autocomplete="off" class="form-inline mr-auto" method="post">{% csrf_token %}
                         <div style="position:relative; bottom:7px;">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Votre recherche" aria-label="Search" name="product">
-                        <button class="btn btn-outline-success btn-rounded btn-sm my-0" type="submit" style="background-color:#DE9440;color:black;">Chercher</button>
+                            <input aria-label="Search" class="form-control mr-sm-2" name="product"
+                                   placeholder="Votre recherche" type="text">
+                            <button class="btn btn-outline-success btn-rounded btn-sm my-0" style="background-color:#DE9440;color:black;"
+                                    type="submit">Chercher
+                            </button>
                         </div>
                     </form>
                 </li>

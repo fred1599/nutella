@@ -9,9 +9,9 @@ from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-from django.views.decorators.debug import sensitive_post_parameters
 
 from aliments.models import Aliment
 from .forms import RegisterForm
