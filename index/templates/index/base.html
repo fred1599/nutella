@@ -83,8 +83,7 @@
                 </li>
                 {% endif %}
                 <li class="nav-item" style="display:inline-block">
-                    <form action="/aliments/page/1/" autocomplete="off" class="form-inline mr-auto" method="post">{%
-                        csrf_token %}
+                    <form action="/aliments/page/1/" autocomplete="off" class="form-inline mr-auto" method="post">{% csrf_token %}
                         <div style="position:relative; bottom:7px;">
                             <input aria-label="Search" class="form-control mr-sm-2" name="product"
                                    placeholder="Votre recherche" type="text">
