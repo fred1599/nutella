@@ -134,7 +134,7 @@ def detail_view(request, name_product):
     :param name_product: Nom du produit dont on souhaite les détails
     """
     substitutes = request.session['substitutes']
-    infos = ('product_name_fr', 'categories', 'nutrition_grades_tags', 'image_small_url', 'ingredients_text_fr')
+    infos = ('product_name_fr', 'categories', 'nutrition_grades_tags', 'image_small_url', 'ingredients_text_fr', 'url')
     res = []
     for list_s in substitutes:
         for s in list_s:

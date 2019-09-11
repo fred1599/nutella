@@ -20,15 +20,12 @@
                     <div class="mb-1 text-muted"><u>Ingrédients</u></div>
                     <p class="card-text mb-auto">{{ product.4 }}</p>
                 </div>
-                <img alt="{{ product.0 }}" class="card-img-right flex-auto d-none d-lg-block" src="{{ product.3 }}">
+                <a href="{{ product.5 }}">
+                    <img alt="{{ product.0 }}" class="card-img-right flex-auto d-none d-lg-block" src="{{ product.3 }}">
+                </a>
             </div>
         </div>
     </div>
 </header>
 {% endblock header %}
-
-{% for val in product %}
-{{ val }}<br>
-{% endfor %}
-
 </html>
