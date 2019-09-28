@@ -10,6 +10,7 @@ services:
 
 before_install:
   - export DJANGO_SETTINGS_MODULE=purbeurre.settings
+  - export ADMIN=fred1599
 
 install:
   - pip install -r requirements.txt
