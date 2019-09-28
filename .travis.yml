@@ -1,0 +1,30 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+services:
+  - postgresql
+matrix:
+  include:
+    - name: "Python 3.6"
+      python: 3.6
+    - name: "Python 3.6 on linux"
+      os: linux
+      language: shell
+    - name: "Python 3.6 on Windows"
+      os: windows
+      language: shell
+      before_install:
+        - python3 -m pip install --upgrade pip
+      env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+install: pip3 install --upgrade pip
+# command to install dependencies
+install:
+  - pip3 install --upgrade pip
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - python manage.py test
+virtualenv:
+  system_site_packages: true
