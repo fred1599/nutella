@@ -5,6 +5,9 @@ python:
 env:
   - DJANGO=2.2
 
+services:
+  - postgresql
+
 before_install:
   - export DJANGO_SETTINGS_MODULE=purbeurre.settings
 
@@ -15,3 +18,4 @@ install:
 
 script:
   - python manage.py migrate
+
