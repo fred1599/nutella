@@ -1,18 +1,16 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
   - "3.6"
 matrix:
   include:
     - name: "Python 3.6 on linux"
       os: linux
       language: shell
-      before_install:
-        - python3 -m pip install --upgrade pip
+before_install:
+  - apt-get install python3-pip
 # command to install dependencies
 install:
-  - pip3 install --upgrade pip
+  - pip install --upgrade pip
   - pip install -r requirements.txt
 # command to run tests
 script:
