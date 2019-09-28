@@ -1,19 +1,11 @@
 language: python
-python:
-  - "3.6"
 matrix:
   include:
-    - name: "Python 3.6 on linux"
-      os: linux
-      language: shell
+    - python: 3.6
+    dist: xenial
+    sudo: true
 before_install:
-  - apt-get install python3-pip
-# command to install dependencies
-install:
   - pip install --upgrade pip
+install:
   - pip install -r requirements.txt
-# command to run tests
-script:
-  - python manage.py test
-virtualenv:
-  system_site_packages: true
+
