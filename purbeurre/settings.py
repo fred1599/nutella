@@ -12,8 +12,13 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import sys
-
 import dj_database_url
+
+from raven import Client
+
+client = Client(
+    'https://996d827d45c74a70806b6269417600c3:07603450349e4335acf1516bb262925f@sentry.io/1764495'
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -21,6 +26,8 @@ import dj_database_url
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+#  https://996d827d45c74a70806b6269417600c3@sentry.io/1764495
 
 DEBUG = False
 
