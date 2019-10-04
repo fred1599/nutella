@@ -8,7 +8,6 @@ from .utils import (
     wrap_list,
 )
 
-from raven.contrib.django.raven_compat.models import client
 
 @csrf_exempt
 def product_view(request, page_number):

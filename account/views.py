@@ -17,8 +17,6 @@ from aliments.models import Aliment
 from .forms import RegisterForm
 from .models import Profil
 
-from raven.contrib.django.raven_compat.models import client
-
 logger = logging.getLogger(__name__)
 
 messages = {
@@ -84,7 +82,6 @@ class LoginView(FormView):
             return self.form_valid(form)
         else:
             self.set_test_cookie()
-            client.captureException()
             return self.form_invalid(form)  # Réponse dans le contexte sur formulaire non valide
 
 
