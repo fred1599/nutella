@@ -148,8 +148,3 @@ def detail_view(request, name_product):
                     res.append(val)
                 return render(request, 'aliments/details.html', {'product': res})
     return redirect('index')
-
-def handle_request(request):
-    client.user_context({
-        'email': request.user.email
-    })
