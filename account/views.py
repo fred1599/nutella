@@ -17,6 +17,8 @@ from aliments.models import Aliment
 from .forms import RegisterForm
 from .models import Profil
 
+from raven.contrib.django.raven_compat.models import client
+
 logger = logging.getLogger(__name__)
 
 messages = {
