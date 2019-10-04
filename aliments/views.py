@@ -100,7 +100,7 @@ def save(request):
                 aliment = Aliment.objects.create(name=name, url=url, score=score, url_image=url_image)
             try:
                 aliment = Aliment.objects.get(user_set=request.user, url=url)
-            except Aliment.DoesNotExists:
+            except Aliment.DoesNotExist:
                 aliment.user_set.add(request.user)
                 aliment.save()
 
