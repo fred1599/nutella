@@ -84,7 +84,7 @@ class LoginView(FormView):
             return self.form_valid(form)
         else:
             self.set_test_cookie()
-            client.captureException("Erreur connexion")
+            client.captureException()
             return self.form_invalid(form)  # Réponse dans le contexte sur formulaire non valide
 
 
