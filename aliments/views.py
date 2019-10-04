@@ -8,7 +8,7 @@ from .utils import (
     wrap_list,
 )
 
-from django.conf import settings
+from raven.contrib.django.raven_compat.models import client
 
 @csrf_exempt
 def product_view(request, page_number):
@@ -150,6 +150,6 @@ def detail_view(request, name_product):
     return redirect('index')
 
 def handle_request(request):
-    settings.client.user_context({
+    client.user_context({
         'email': request.user.email
     })

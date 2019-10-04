@@ -13,12 +13,20 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 import sys
 import dj_database_url
+import raven
 
 from raven import Client
 
 client = Client(
     'https://996d827d45c74a70806b6269417600c3:07603450349e4335acf1516bb262925f@sentry.io/1764495'
 )
+
+RAVEN_CONFIG = {
+    'dsn': 'https://996d827d45c74a70806b6269417600c3:07603450349e4335acf1516bb262925f@sentry.io/1764495',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -63,6 +71,8 @@ INSTALLED_APPS = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
+    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware',
+    'raven.contrib.django.raven_compat.middleware.Sentry404CatchMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -94,6 +104,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
