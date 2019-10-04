@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'index',
     'aliments',
     'whitenoise.runserver_nostatic',
+    'raven.contrib.django.raven_compat',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
