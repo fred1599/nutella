@@ -25,7 +25,7 @@ RAVEN_CONFIG = {
     'dsn': 'https://996d827d45c74a70806b6269417600c3:07603450349e4335acf1516bb262925f@sentry.io/1764495',
     # If you are using git, you can also automatically configure the
     # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
 }
 
 # Quick-start development settings - unsuitable for production
