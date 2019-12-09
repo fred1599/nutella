@@ -11,6 +11,7 @@ services:
 before_install:
   - export DJANGO_SETTINGS_MODULE=purbeurre.settings
   - export ADMIN=postgres
+  - export SECRET_KEY='va+2yno76dii*yk9s9cppxzwxv&gp_g(zg@ic=-bb9@0c9$1&^'
 
 install:
   - pip install -r requirements.txt
